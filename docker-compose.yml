@@ -1,0 +1,32 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: always
+    volumes:
+      - prometheus_data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml' # Load the Prometheus configuration file
+      - '--storage.tsdb.path=/prometheus' # Specify the path for the time series database
+      - '--web.console.libraries=/etc/prometheus/console_libraries' # Specify the path for console libraries
+      - '--web.console.templates=/etc/prometheus/consoles' # Specify the path for console templates
+      - '--web.enable-lifecycle' # Enable lifecycle management
+
+    expose:
+      - "9090" # Expose port 9090 for Prometheus web interface
+
+    ports:
+      - "9090:9090" # Map port 9090 of the host to port 9090 of the container
+
+    networks:
+      - monitoring # Connect the Prometheus container to the 'monitoring' network
+
+networks:
+  monitoring:
+    driver: bridge # The bridge driver creates a private internal network on the host system, allowing containers to communicate with each other while isolating them from the host network.
+
+volumes:
+  prometheus_data: {}
+
