@@ -1,4 +1,24 @@
 services:
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    restart: always
+    command:
+      - '--path.procfs=/host/proc' # Specify the proc filesystem path for node exporter
+      - '--path.sysfs=/host/sys' # Specify the sys filesystem path for node exporter
+      - '--path.rootfs=/host' # Specify the root filesystem path for node exporter
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($|/)' # Ignore certain mount points for filesystem metrics
+    volumes:
+      - /proc:/host/proc:ro,rslave # Mount the host's /proc filesystem as read-only to the container
+      - /sys:/host/sys:ro,rslave # Mount the host's /sys filesystem as read-only to the container
+      - /:/host:ro,rslave # Mount the host's root filesystem as read-only to the container
+    expose:
+      - "9100" # Expose port 9100 for node exporter metrics
+    ports:
+      - "9100:9100" # Map port 9100 of the host to port 9100 of the container
+    networks:
+      - monitoring # Connect the node exporter container to the 'monitoring' network
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
