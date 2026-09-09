@@ -81,6 +81,20 @@ services:
     networks:
       - monitoring # Connect the cAdvisor container to the 'monitoring' network
 
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    restart: always
+    ports:
+      - "3100:3100" # Map port 3100 of the host to port 3100 of the container for Loki API
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml # Mount the Loki configuration file from the host to the container
+      - loki_data:/loki # Persist Loki data in a Docker volume
+    command:
+      - '-config.file=/etc/loki/local-config.yaml' # Load the Loki configuration file
+    networks:
+      - monitoring # Connect the Loki container to the 'monitoring' network
+
 networks:
   monitoring:
     driver: bridge # The bridge driver creates a private internal network on the host system, allowing containers to communicate with each other while isolating them from the host network.
