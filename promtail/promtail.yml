@@ -17,3 +17,14 @@ scrape_configs:
           __path__: /var/lib/docker/containers/*/*-json.log # Set the path to the Docker container log files that Promtail will scrape. This uses
     pipeline_stages:
       - docker: {} # Set the pipeline stage to 'docker', which tells Promtail to parse the log lines as Docker logs. This stage extracts relevant information from the Docker log format, such as container ID, name, and log message. The default is an empty configuration, which means no additional processing is applied to the log lines.
+
+    scrape_configs:
+    # Target 1: System logs (e.g., auth, syslog)
+    - job_name: system
+      static_configs:
+        - targets:
+            - localhost
+          labels:
+            job: varlogs
+            host: my-server-01
+            __path__: /var/log/*.log

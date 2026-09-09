@@ -100,6 +100,7 @@ services:
     container_name: promtail
     restart: always
     volumes:
+      - /var/log:/var/log:ro # Mount the host's /var/log directory as read-only to the container for Promtail to access log files
       - ./promtail/promtail.yml:/etc/promtail/config.yaml:ro # Mount the Promtail configuration file from the host to the container
       - /var/lib/docker/containers:/var/lib/docker/containers:ro # Mount the host's Docker containers directory as read-only to the container
       - /var/run/docker.sock:/var/run/docker.sock # Mount the Docker socket to the container for Promtail to access Docker logs
