@@ -1,17 +1,17 @@
-auth_enabled: false
+auth_enabled: false # Set to true to enable authentication. If enabled, you must provide a valid token in the Authorization header of each request.
 
 server:
-  http_listen_port: 3100
+  http_listen_port: 3100 # Set the port on which the Loki server will listen for incoming HTTP requests. The default is 3100.
 
 common:
   ring:
-    instance_addr: 127.0.0.1
+    instance_addr: 127.0.0.1 # Set the instance address for the ring. This is used for inter-node communication in a multi-node setup. The default is
     kvstore:
-      store: inmemory
-  replication_factor: 1
-  path_prefix: /loki
+      store: inmemory # Set the key-value store to use for storing ring state. Options include 'inmemory', 'consul', 'etcd', and 'memberlist'. The default is 'inmemory'.
+  replication_factor: 1 # Set the replication factor for the ring. This determines how many copies of each log stream are stored in the ring. The default is 1.
+  path_prefix: /loki # Set the path prefix for storing log data. This is the directory where Loki will store its log chunks and index files. The default is '/loki'.
 
-schema_config:
+schema_config: # Define the schema configuration for Loki. This section specifies how log data is stored and indexed. It includes the following parameters:
   configs:
     - from: "2020-10-24"
       store: tsdb
@@ -21,6 +21,6 @@ schema_config:
         prefix: index_
         period: 24h
 
-storage_config:
+storage_config: # Define the storage configuration for Loki. This section specifies how log data is stored and retrieved. It includes the following parameters:
   filesystem:
-    directory: /loki/chunks
+    directory: /loki/chunks # Set the directory where Loki will store its log chunks on the filesystem. The default is '/loki/chunks'.
