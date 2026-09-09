@@ -109,4 +109,27 @@ Interview Answer 🎯
 
 Grafana is an open-source monitoring and observability platform used to visualize and analyze metrics, logs, and traces. It connects with data sources such as Prometheus and displays the collected data using dashboards, graphs, charts, and gauges. Grafana also supports alerting, helping DevOps teams monitor infrastructure and applications and quickly identify issues.
 
-## 
+## What is cAdvisor?
+
+Node Exporter mainly monitors the host machine.
+## But suppose you have multiple Docker containers:
+You may want to know:
+
+Which container is using high CPU?
+Which container is consuming more memory?
+How much network traffic is each container using?
+How much disk I/O is each container generating?
+
+👉 cAdvisor provides these container-level metrics.
+
+cAdvisor (Container Advisor) is an open-source tool developed by Google that collects resource usage and performance metrics from running containers.
+
+Simple definition:
+
+cAdvisor monitors Docker containers and provides metrics about CPU, Memory, Network, and Disk usage.
+
+Interview Answer 🎯
+
+cAdvisor is a container monitoring tool that collects resource usage and performance metrics from running containers, such as CPU, memory, network, and filesystem usage. Prometheus scrapes these metrics from cAdvisor, and Grafana visualizes them in dashboards. Node Exporter monitors the host machine, while cAdvisor provides container-level monitoring.
+
+##
