@@ -55,6 +55,32 @@ services:
     networks:
       - monitoring # Connect the Prometheus container to the 'monitoring' network
 
+  notes-app:
+    build:
+      context: ./notes-app # Build the notes app Docker image from the specified context directory
+      dockerfile: Dockerfile
+    container_name: notes-app
+    restart: always
+    ports:
+      - "8000:8000" # Map port 8000 of the host to port 8000 of the container for the notes app
+    networks:
+      - monitoring # Connect the notes app container to the 'monitoring' network
+
+  cadviser:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadviser
+    restart: always
+    ports:
+      - "8080:8080" # Map port 8080 of the host to port 8080 of the container for cAdvisor web interface
+    volumes:
+      - /:/rootfs:ro # Mount the host's root filesystem as read-only to the container
+      - /var/run:/var/run:rw # Mount the host's /var/run directory to the container with read-write permissions
+      - /sys:/sys:ro # Mount the host's /sys filesystem as read-only to the container
+      - /var/lib/docker/:/var/lib/docker:ro # Mount the host's Docker data directory as read-only to the container
+
+    networks:
+      - monitoring # Connect the cAdvisor container to the 'monitoring' network
+
 networks:
   monitoring:
     driver: bridge # The bridge driver creates a private internal network on the host system, allowing containers to communicate with each other while isolating them from the host network.
