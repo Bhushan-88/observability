@@ -100,11 +100,11 @@ services:
     container_name: promtail
     restart: always
     volumes:
-      - ./promtail.yml:/etc/promtail/config.yaml:ro # Mount the Promtail configuration file from the host to the container
+      - ./promtail/promtail.yml:/etc/promtail/config.yaml:ro # Mount the Promtail configuration file from the host to the container
       - /var/lib/docker/containers:/var/lib/docker/containers:ro # Mount the host's Docker containers directory as read-only to the container
       - /var/run/docker.sock:/var/run/docker.sock # Mount the Docker socket to the container for Promtail to access Docker logs
     command:
-      - '-config.file=/etc/promtail/config.yaml' # Load the Promtail configuration file
+      - '-config.file=/etc/promtail/config.yml' # Load the Promtail configuration file
     depends_on:
       - loki # Ensure that Promtail starts after Loki is up and running
     networks:
