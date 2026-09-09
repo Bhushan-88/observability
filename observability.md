@@ -132,4 +132,50 @@ Interview Answer 🎯
 
 cAdvisor is a container monitoring tool that collects resource usage and performance metrics from running containers, such as CPU, memory, network, and filesystem usage. Prometheus scrapes these metrics from cAdvisor, and Grafana visualizes them in dashboards. Node Exporter monitors the host machine, while cAdvisor provides container-level monitoring.
 
-##
+## Log Monitoring
+
+1. What is Loki?
+
+Loki is a log aggregation system developed by Grafana Labs.
+
+Simple definition:
+
+Loki collects, stores, and allows you to query logs from applications and infrastructure.
+
+Example logs:
+
+INFO: Application started
+INFO: Database connected
+ERROR: Database connection failed
+ERROR: API request failed
+
+Loki stores these logs so you can view and search them in Grafana.
+
+2. What is Promtail?
+
+Promtail is a log collection agent.
+
+Simple definition:
+
+Promtail collects logs from containers or log files and sends them to Loki.
+
+Application / Docker Container
+           │
+           │ Generates Logs
+           ▼
+        Promtail
+           │
+           │ Sends Logs
+           ▼
+          Loki
+           │
+           │ Stores Logs
+           ▼
+         Grafana
+           │
+           ▼
+      View & Search Logs
+
+Interview Answer 🎯
+
+Loki is a log aggregation system used to collect, store, and query logs. Promtail acts as a log collection agent that reads logs from applications, servers, or containers and sends them to Loki. Grafana then connects to Loki to visualize and search the logs. Together, they provide centralized log monitoring and troubleshooting capabilities.
