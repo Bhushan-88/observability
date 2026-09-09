@@ -95,6 +95,21 @@ services:
     networks:
       - monitoring # Connect the Loki container to the 'monitoring' network
 
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    restart: always
+    volumes:
+      - ./promtail.yml:/etc/promtail/config.yaml:ro # Mount the Promtail configuration file from the host to the container
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro # Mount the host's Docker containers directory as read-only to the container
+      - /var/run/docker.sock:/var/run/docker.sock # Mount the Docker socket to the container for Promtail to access Docker logs
+    command:
+      - '-config.file=/etc/promtail/config.yaml' # Load the Promtail configuration file
+    depends_on:
+      - loki # Ensure that Promtail starts after Loki is up and running
+    networks:
+      - monitoring # Connect the Promtail container to the 'monitoring' network
+
 networks:
   monitoring:
     driver: bridge # The bridge driver creates a private internal network on the host system, allowing containers to communicate with each other while isolating them from the host network.
