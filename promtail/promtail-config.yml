@@ -1,11 +1,11 @@
 server:
-  http_listen_port: 9080
+  http_listen_port: 9080 # Set the port on which the Promtail server will listen for incoming HTTP requests. The default is 9080.
 
 positions:
-  filename: /tmp/positions.yaml
+  filename: /tmp/positions.yaml # Set the file path where Promtail will store its positions. This file keeps track of the last read positions in the log files, allowing Promtail to resume reading from the correct position after a restart. The default is '/tmp/positions.yaml'.
 
 clients:
-  - url: http://loki:3100/loki/api/v1/push
+  - url: http://loki:3100/loki/api/v1/push # Set the URL of the Loki server to which Promtail will send log data. This should point to the Loki API endpoint for pushing logs. The default is 'http://localhost:3100/loki/api/v1/push'.
 
 scrape_configs:
   - job_name: docker
@@ -14,6 +14,6 @@ scrape_configs:
           - localhost
         labels:
           job: docker
-          __path__: /var/lib/docker/containers/*/*-json.log
+          __path__: /var/lib/docker/containers/*/*-json.log # Set the path to the Docker container log files that Promtail will scrape. This uses
     pipeline_stages:
-      - docker: {}
+      - docker: {} # Set the pipeline stage to 'docker', which tells Promtail to parse the log lines as Docker logs. This stage extracts relevant information from the Docker log format, such as container ID, name, and log message. The default is an empty configuration, which means no additional processing is applied to the log lines.

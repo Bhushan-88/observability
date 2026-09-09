@@ -88,7 +88,7 @@ services:
     ports:
       - "3100:3100" # Map port 3100 of the host to port 3100 of the container for Loki API
     volumes:
-      - ./loki-config.yaml:/etc/loki/local-config.yaml # Mount the Loki configuration file from the host to the container
+      - ./loki/loki-config.yml:/etc/loki/local-config.yaml:ro # Mount the Loki configuration file from the host to the container
       - loki_data:/loki # Persist Loki data in a Docker volume
     command:
       - '-config.file=/etc/loki/local-config.yaml' # Load the Loki configuration file
